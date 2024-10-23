@@ -14,18 +14,22 @@ public class Paddle : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void MoveLeft(float value)
+    public void MoveLeft()
     {
-        rb.DOMoveX(transform.position.x - value, delayToMove);
+        rb.AddForce(Vector3.left * speed * Time.deltaTime, ForceMode.Impulse);
     }
 
-    public void MoveRight(float value)
+    public void MoveRight()
     {
-        rb.DOMoveX(transform.position.x + value, delayToMove);
+        rb.AddForce(Vector3.right * speed * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void FreezePaddle()
     {
         rb.Sleep();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
     }
 }
