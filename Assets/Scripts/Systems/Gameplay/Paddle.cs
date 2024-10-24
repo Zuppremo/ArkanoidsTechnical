@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Paddle : MonoBehaviour
 {
@@ -10,22 +11,15 @@ public class Paddle : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void MoveLeft()
+    private void FixedUpdate()
     {
-        rb.AddForce(Vector3.left * speed * Time.deltaTime, ForceMode.Impulse);
+        if (Keyboard.current.aKey.isPressed)
+            MovePaddle(Vector3.left);
+        else if (Keyboard.current.dKey.isPressed)
+            MovePaddle(Vector3.right);
     }
-
-    public void MoveRight()
+    private void MovePaddle(Vector3 direction)
     {
-        rb.AddForce(Vector3.right * speed * Time.deltaTime, ForceMode.Impulse);
-    }
-
-    public void FreezePaddle()
-    {
-        rb.Sleep();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
+        rb.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode.Impulse);
     }
 }
