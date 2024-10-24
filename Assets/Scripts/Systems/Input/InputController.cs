@@ -12,15 +12,15 @@ public class InputController : MonoBehaviour
     {
         paddle = FindObjectOfType<Paddle>();
     }
-    void Update()
+    void FixedUpdate()
     {
-        if(!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
-            paddle.FreezePaddle();
         if (Keyboard.current.aKey.isPressed)
+        {
             if (paddle.transform.position.x < leftLimit)
                 return;
             else
                 paddle.MoveLeft();
+        }
         else if (Keyboard.current.dKey.isPressed)
             if (paddle.transform.position.x > rightLimit)
                 return;
