@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BasicBlock : MonoBehaviour, IHealth, IDestructable
+public class Block : MonoBehaviour, IHealth, IDestructable
 {
     [SerializeField] private int blockHealth;
     public int Health { get => blockHealth; set => blockHealth = value; }
