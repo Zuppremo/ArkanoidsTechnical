@@ -5,29 +5,41 @@ public class Ball : MonoBehaviour
 {
     public event Action OnBallLost;
     [SerializeField] private float elevationForce = 1.5F;
+    [SerializeField] private float ballSpeed = 1.5F;
+    [SerializeField] private float ballMaxSpeed = 30F;
+
+    private float sqrMaxVelocity;
     private Rigidbody rb;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.GetComponent<Paddle>() != null)
-            GiveRandomForceToBall();
+        sqrMaxVelocity = ballMaxSpeed * ballMaxSpeed;
     }
     private void OnTriggerEnter(Collider other)
     {
         OnBallLost?.Invoke();
     }
 
-    public void GiveRandomForceToBall()
+    private void FixedUpdate()
     {
-        rb.AddForce(UnityEngine.Random.Range(-elevationForce, elevationForce), elevationForce, 0, ForceMode.Impulse);
-    }
+        //Debug.Log(rb.velocity);
+        var velocity = rb.velocity;
 
+        if (velocity.sqrMagnitude > sqrMaxVelocity)
+            rb.velocity = velocity.normalized * ballMaxSpeed;
+    }
     public void GiveUpForceToBall()
     {
-        rb.AddForce(0, elevationForce, 0, ForceMode.Impulse);
+        rb.AddForce(0, elevationForce, 0, ForceMode.VelocityChange);
+    }
+
+    public void GiveLeftForceToBall()
+    {
+        rb.AddForce(-elevationForce , elevationForce, 0, ForceMode.VelocityChange);
+    }
+    public void GiveRightForceToBall()
+    {
+        rb.AddForce(elevationForce , elevationForce, 0, ForceMode.VelocityChange);
     }
 
     public void FreezeBall()
