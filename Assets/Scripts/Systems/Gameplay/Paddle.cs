@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
-    [SerializeField] private float delayToMove;
     [SerializeField] private float speed;
     private Rigidbody rb;
 
@@ -16,12 +15,12 @@ public class Paddle : MonoBehaviour
 
     public void MoveLeft()
     {
-        rb.AddForce(Vector3.left * speed * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(Vector3.left * speed, ForceMode.VelocityChange);
     }
 
     public void MoveRight()
     {
-        rb.AddForce(Vector3.right * speed * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(Vector3.right * speed, ForceMode.VelocityChange);
     }
 
     public void FreezePaddle()
