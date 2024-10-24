@@ -30,16 +30,16 @@ public class Ball : MonoBehaviour
     }
     public void GiveUpForceToBall()
     {
-        rb.AddForce(0, elevationForce, 0, ForceMode.VelocityChange);
+        rb.AddForce(0, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
     }
 
     public void GiveLeftForceToBall()
     {
-        rb.AddForce(-elevationForce , elevationForce, 0, ForceMode.VelocityChange);
+        rb.AddForce(-elevationForce * Time.deltaTime, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
     }
     public void GiveRightForceToBall()
     {
-        rb.AddForce(elevationForce , elevationForce, 0, ForceMode.VelocityChange);
+        rb.AddForce(elevationForce * Time.deltaTime, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
     }
 
     public void FreezeBall()

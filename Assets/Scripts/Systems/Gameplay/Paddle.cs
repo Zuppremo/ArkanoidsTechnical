@@ -1,6 +1,3 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
@@ -15,12 +12,12 @@ public class Paddle : MonoBehaviour
 
     public void MoveLeft()
     {
-        rb.AddForce(Vector3.left * speed, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.left * speed * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void MoveRight()
     {
-        rb.AddForce(Vector3.right * speed, ForceMode.VelocityChange);
+        rb.AddForce(Vector3.right * speed * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void FreezePaddle()
