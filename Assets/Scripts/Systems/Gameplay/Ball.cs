@@ -1,45 +1,31 @@
-using System;
 using UnityEngine;
-
 public class Ball : MonoBehaviour
 {
-    public event Action OnBallLost;
-    [SerializeField] private float elevationForce = 1.5F;
-    [SerializeField] private float ballSpeed = 1.5F;
-    [SerializeField] private float ballMaxSpeed = 30F;
-
-    private float sqrMaxVelocity;
+    [SerializeField] private float maxSpeed = 5F;
+    private Vector3 lastVelocity;
     private Rigidbody rb;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        sqrMaxVelocity = ballMaxSpeed * ballMaxSpeed;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        OnBallLost?.Invoke();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        //Debug.Log(rb.velocity);
-        var velocity = rb.velocity;
-
-        if (velocity.sqrMagnitude > sqrMaxVelocity)
-            rb.velocity = velocity.normalized * ballMaxSpeed;
-    }
-    public void GiveUpForceToBall()
-    {
-        rb.AddForce(0, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
+        lastVelocity = rb.velocity;
     }
 
-    public void GiveLeftForceToBall()
+    private void OnCollisionEnter(Collision collision)
     {
-        rb.AddForce(-elevationForce * Time.deltaTime, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
-    }
-    public void GiveRightForceToBall()
-    {
-        rb.AddForce(elevationForce * Time.deltaTime, elevationForce * Time.deltaTime, 0, ForceMode.Impulse);
+        float minSpeed = lastVelocity.magnitude;
+        Vector3 direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+        Vector3 extraVelocity = Vector3.zero;
+        if (collision.rigidbody != null)
+            extraVelocity = collision.rigidbody.velocity;
+        rb.velocity = (direction * Mathf.Max(minSpeed, maxSpeed)) + extraVelocity;
+
+        if(rb.velocity.sqrMagnitude > (maxSpeed * maxSpeed))
+            rb.velocity = rb.velocity.normalized * maxSpeed;
     }
 
     public void FreezeBall()
