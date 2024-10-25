@@ -1,7 +1,11 @@
-public class PlayerData
+public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 {
     private int lives;
     private int score;
+
+    public int Lives => lives;
+    public int Score => score;
+
     public PlayerData(int lives, int score)
     {
         this.lives = lives;
