@@ -1,25 +1,51 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Paddle : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private InputActionReference actionReference;
     private Rigidbody rb;
+    private float moveDirection;
+    private InputAction action;
 
     private void Awake()
     {
+        action = actionReference.action;
         rb = GetComponent<Rigidbody>();
+        action.performed += OnActionPerformed;
+        action.canceled += OnActionCanceled;
+    }
+
+    private void OnActionCanceled(InputAction.CallbackContext context)
+    {
+        moveDirection = 0;
+    }
+
+    private void OnEnable()
+    {
+        action.Enable();
     }
 
     private void FixedUpdate()
     {
-        if (Keyboard.current.aKey.isPressed)
-            MovePaddle(Vector3.left);
-        else if (Keyboard.current.dKey.isPressed)
-            MovePaddle(Vector3.right);
+        rb.velocity = (Vector3.right * moveDirection) * speed * Time.fixedDeltaTime;
     }
-    private void MovePaddle(Vector3 direction)
+
+    private void OnDestroy()
     {
-        rb.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode.Impulse);
+        action.performed -= OnActionPerformed;
+        action.canceled -= OnActionCanceled;
+    }
+
+    private void OnActionPerformed(InputAction.CallbackContext context)
+    {
+        moveDirection = context.ReadValue<float>();
+    }
+
+    private void OnDisable()
+    {
+        action.Disable();
     }
 }
