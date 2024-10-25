@@ -1,27 +1,22 @@
 using UnityEngine;
 
-public class Block : MonoBehaviour, IHealth, IDestructable
+public class Block : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int blockHealth;
-    public int Health { get => blockHealth; set => blockHealth = value; }
+    [SerializeField] private int maxHealth;
+    private int currentHealth;
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Awake()
     {
-        if(collision.gameObject.name == "Ball")
-        {
-            blockHealth--;
-        }
-        VerifyHealthOnTouch();
+        currentHealth = maxHealth;
     }
-
-    public void Destroy()
+    
+    public void ReceiveDamage(int damage)
     {
-        Destroy(gameObject);
-    }
-
-    private void VerifyHealthOnTouch()
-    {
-        if (blockHealth <= 0)
-            Destroy();
+        if (currentHealth > 0)
+            currentHealth -= damage;
+        else
+            gameObject.SetActive(false);
     }
 }
