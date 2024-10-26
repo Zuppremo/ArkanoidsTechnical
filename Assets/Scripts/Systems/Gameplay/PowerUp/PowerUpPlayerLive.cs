@@ -6,8 +6,9 @@ public class PowerUpPlayerLive : PowerUpBase
 
     private PlayerData playerData;
 
-    private void Start()
+    public override void Awake()
     {
+        base.Awake();
         playerData = FindObjectOfType<GameController>().PlayerData;
     }
 

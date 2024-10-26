@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class PowerUpIncreaseBallSpeed : PowerUpBase
+public class PowerUpIncreasePaddleSpeed : PowerUpBase
 {
     [SerializeField] private float desiredSpeed = 14F;
     [SerializeField] private float powerUpDuration = 2F;
 
-    private IBall ball;
+    private IPaddle paddle;
 
     public override void Awake()
     {
         base.Awake();
-        ball = FindObjectOfType<Ball>();
+        paddle = FindObjectOfType<Paddle>();
     }
 
     public override void Activate()
     {
-        ball.AddPowerUp(desiredSpeed, powerUpDuration);
+        paddle.AddPowerUp(desiredSpeed, powerUpDuration);
     }
 }
