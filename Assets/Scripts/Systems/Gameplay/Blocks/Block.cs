@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Block : MonoBehaviour, IDamageable
 {
-    public event Action<Block> OnBlockDestroyed;
-    public event Action<Block> OnBlockHit;
+    public event Action<Block> BlockDestroyed;
+    public event Action<Block> BlockHit;
 
     [SerializeField] private int maxHealth;
     [SerializeField] private List<PowerUpBase> powerUps = new List<PowerUpBase>();
@@ -22,9 +22,9 @@ public class Block : MonoBehaviour, IDamageable
     
     public void ReceiveDamage(int damage)
     {
+        BlockHit?.Invoke(this);
         if (currentHealth > 0)
         {
-            OnBlockHit?.Invoke(this);
             currentHealth -= damage;
         }
         else
@@ -37,8 +37,13 @@ public class Block : MonoBehaviour, IDamageable
                 Instantiate(powerUps[randomGameObject], transform.position, Quaternion.identity);
             }
 
-            OnBlockDestroyed?.Invoke(this);
-            gameObject.SetActive(false);
+            BlockDestroyed?.Invoke(this);
+            Invoke(nameof(TurnOffBlock), 1F);
         }
+    }
+
+    private void TurnOffBlock()
+    {
+        gameObject.SetActive(false);
     }
 }
