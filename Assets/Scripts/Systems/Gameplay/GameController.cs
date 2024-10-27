@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IGameControllerForState
 {
     public event Action OnGameWon;
     public event Action OnGameLost;
-    
+    public event Action<int> OnScore;
+
+    [SerializeField] private GameplayInput input;
+
     private PlayerData playerData;
     private List<IDamageable> blocks = new List<IDamageable>();
     private Ball ball;
@@ -20,10 +23,10 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        ball = FindObjectOfType<Ball>();
+        paddle = FindObjectOfType<Paddle>();
         killZone = FindObjectOfType<KillZone>();
-
         playerData = new PlayerData(3, 0);
-        Debug.Log(playerData.Lives);
         var gameObjectsInScene = FindObjectsOfType<MonoBehaviour>().OfType<IDamageable>();
         foreach (IDamageable destructable in gameObjectsInScene)
         {
@@ -33,12 +36,20 @@ public class GameController : MonoBehaviour
 
         killZone.OnBallLost += HandleBallLost;
         gameState = GameState.WaitingLaunch;
+        input.Initialize(paddle, ball);
+        ball.BallLaunched += OnBallLaunched;
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-        ball = FindObjectOfType<Ball>();
-        paddle = FindObjectOfType<Paddle>();
+        killZone.OnBallLost -= HandleBallLost;
+        ball.BallLaunched -= OnBallLaunched;
+    }
+
+    private void OnBallLaunched()
+    {
+        if (gameState is GameState.WaitingLaunch)
+            gameState = GameState.Gameplay;
     }
 
     private void Update()
@@ -50,10 +61,10 @@ public class GameController : MonoBehaviour
     {
         blocks.Remove(block);
         playerData.AddScore(100);
+        OnScore?.Invoke(playerData.Score);
         block.OnBlockDestroyed -= HandleBlockDestroyed;
         if (blocks.Count == 0)
         {
-            Debug.Log("Game Won");
             OnGameWon?.Invoke();
             gameState = GameState.GameWin;
         }
@@ -66,17 +77,14 @@ public class GameController : MonoBehaviour
         {
             OnGameLost?.Invoke();
             gameState = GameState.GameLost;
+            return;
         }
 
+        ball.OnBallLost();
         ball.transform.SetParent(paddle.transform);
-        ball.ChangeKinematicState();
         ball.transform.position = new Vector3(paddle.transform.position.x, paddle.transform.position.y + 0.5F, 0);
-
         gameState = GameState.WaitingLaunch;
     }
 
-    private void OnDisable()
-    {
-        killZone.OnBallLost -= HandleBallLost;
-    }
+    
 }
