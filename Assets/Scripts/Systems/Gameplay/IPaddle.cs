@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IPaddle 
 {
-    void AddPowerUp(float speed, float timeLeft);
-    void ChangeSize(float sizeX, float duration);
+    void AddSpeedPowerUp(float speed, float timeLeft);
+    void AddSizePowerUp(float sizeX, float duration);
 }
