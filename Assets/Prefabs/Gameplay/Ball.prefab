@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 8
+  yOffset: 1.017
 --- !u!114 &7722555741902378083
 MonoBehaviour:
   m_ObjectHideFlags: 0

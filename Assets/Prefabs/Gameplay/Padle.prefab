@@ -147,8 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648734707c22aa34bacd068893004769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 460
-  actionReference: {fileID: 2655194319636209057, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
+  speed: 480
+  movementActionReference: {fileID: 0}
+  jumpActionReference: {fileID: 0}
 --- !u!114 &8646359859777255115
 MonoBehaviour:
   m_ObjectHideFlags: 0
