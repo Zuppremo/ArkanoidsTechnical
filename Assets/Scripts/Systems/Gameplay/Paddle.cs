@@ -77,7 +77,7 @@ public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
         if (newSize == transform.localScale.x || newSize > maxPaddleSize)
             return;
         transform.DOKill();
-        transform.DOScaleX(newSize, 0.25F).SetEase(transform.localScale.x < newSize ? Ease.InElastic : Ease.OutElastic);
+        transform.DOScaleX(newSize, 0.50F).SetEase(transform.localScale.x < newSize ? Ease.InElastic : Ease.OutElastic);
     }
 
     public void SetInput(float value)
