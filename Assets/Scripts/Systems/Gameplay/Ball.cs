@@ -49,8 +49,8 @@ public class Ball : MonoBehaviour, IBall, IBallForInput
         float contactDirY = (collision.contacts[0].point.y - (transform.position.y - (sphereCollider.radius / 2)));
         if (contactDirY < 0.1F)
         {
-            float x = transform.position.x - collision.collider.transform.position.x;
-            extraVelocity += Vector3.right * x * extraSpeedOnCollide;
+            float xDir = transform.position.x - collision.collider.transform.position.x;
+            extraVelocity += Vector3.right * xDir * extraSpeedOnCollide;
         }
 
         rb.velocity = (direction * Mathf.Max(minSpeed, maxSpeed)) + extraVelocity;
