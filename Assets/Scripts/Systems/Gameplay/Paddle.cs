@@ -1,51 +1,87 @@
-using System;
+using DG.Tweening;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class Paddle : MonoBehaviour
+public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
 {
     [SerializeField] private float speed;
-    [SerializeField] private InputActionReference actionReference;
+
+    private IGameControllerForState gameController;
     private Rigidbody rb;
     private float moveDirection;
-    private InputAction action;
+    private readonly List<TimeBasedPowerUp> speedPowerUps = new();
+    private readonly List<TimeBasedPowerUp> sizePowerUps = new();
+    private float paddleSize;
+    private float maxPaddleSize = 6F;
 
     private void Awake()
     {
-        action = actionReference.action;
         rb = GetComponent<Rigidbody>();
-        action.performed += OnActionPerformed;
-        action.canceled += OnActionCanceled;
-    }
-
-    private void OnActionCanceled(InputAction.CallbackContext context)
-    {
-        moveDirection = 0;
-    }
-
-    private void OnEnable()
-    {
-        action.Enable();
-    }
-
-    private void FixedUpdate()
-    {
-        rb.velocity = (Vector3.right * moveDirection) * speed * Time.fixedDeltaTime;
+        gameController = FindObjectOfType<GameController>();
+        paddleSize = transform.localScale.x;
     }
 
     private void OnDestroy()
     {
-        action.performed -= OnActionPerformed;
-        action.canceled -= OnActionCanceled;
+        transform.DOKill();
     }
 
-    private void OnActionPerformed(InputAction.CallbackContext context)
+    private void Update()
     {
-        moveDirection = context.ReadValue<float>();
+        foreach (TimeBasedPowerUp powerUp in speedPowerUps)
+            powerUp.timeLeft -= Time.deltaTime;
+
+        if (speedPowerUps.Count > 0)
+            speedPowerUps.RemoveAll(p => p.timeLeft <= 0);
+
+        foreach (TimeBasedPowerUp powerUp in sizePowerUps)
+            powerUp.timeLeft -= Time.deltaTime;
+
+        if (sizePowerUps.Count > 0)
+        {
+            int removeCount = sizePowerUps.RemoveAll(p => p.timeLeft <= 0);
+            if (removeCount > 0)
+                RefreshScale();
+        }
     }
 
-    private void OnDisable()
+    private void FixedUpdate()
     {
-        action.Disable();
+        float maxSpeed = speed + speedPowerUps.Sum(p => p.value);
+
+        if (gameController.GameState is not (GameState.WaitingLaunch or GameState.Gameplay))
+            maxSpeed = 0;
+        rb.velocity = (Vector3.right * moveDirection) * maxSpeed * Time.fixedDeltaTime;
+    }
+
+    public void AddSpeedPowerUp(float speed, float timeLeft)
+    {
+        if (gameController.GameState != GameState.Gameplay)
+            return;
+        speedPowerUps.Add(new TimeBasedPowerUp(speed, timeLeft));
+    }
+
+    public void AddSizePowerUp(float sizeX, float duration)
+    {
+        if (gameController.GameState != GameState.Gameplay)
+            return;
+        sizePowerUps.Add(new TimeBasedPowerUp(sizeX, duration));
+        RefreshScale();
+    }
+
+    private void RefreshScale()
+    {
+        float newSize = paddleSize + sizePowerUps.Sum(p => p.value);
+        Debug.Log(newSize);
+        if (newSize == transform.localScale.x || newSize > maxPaddleSize)
+            return;
+        transform.DOKill();
+        transform.DOScaleX(newSize, 0.25F).SetEase(transform.localScale.x < newSize ? Ease.InElastic : Ease.OutElastic);
+    }
+
+    public void SetInput(float value)
+    {
+        moveDirection = value;
     }
 }
