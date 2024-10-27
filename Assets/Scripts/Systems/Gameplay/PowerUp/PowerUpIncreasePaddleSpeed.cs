@@ -15,6 +15,6 @@ public class PowerUpIncreasePaddleSpeed : PowerUpBase
 
     public override void Activate()
     {
-        paddle.AddPowerUp(desiredSpeed, powerUpDuration);
+        paddle.AddSpeedPowerUp(desiredSpeed, powerUpDuration);
     }
 }

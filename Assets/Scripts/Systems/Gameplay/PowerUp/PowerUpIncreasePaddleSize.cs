@@ -14,6 +14,6 @@ public class PowerUpIncreasePaddleSize : PowerUpBase
 
     public override void Activate()
     {
-        paddle.ChangeSize(wantedSizeX, duration);
+        paddle.AddSizePowerUp(wantedSizeX, duration);
     }
 }
