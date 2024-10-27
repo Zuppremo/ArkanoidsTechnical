@@ -70,6 +70,17 @@ public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
         RefreshScale();
     }
 
+    public void SetInput(float value)
+    {
+        moveDirection = value;
+    }
+
+    public void FreezePaddle()
+    {
+        if(rb != null)
+            rb.velocity = Vector3.zero;
+    }
+
     private void RefreshScale()
     {
         float newSize = paddleSize + sizePowerUps.Sum(p => p.value);
@@ -78,10 +89,5 @@ public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
             return;
         transform.DOKill();
         transform.DOScaleX(newSize, 0.50F).SetEase(transform.localScale.x < newSize ? Ease.InElastic : Ease.OutElastic);
-    }
-
-    public void SetInput(float value)
-    {
-        moveDirection = value;
     }
 }

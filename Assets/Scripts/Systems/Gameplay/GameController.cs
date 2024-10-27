@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour, IGameControllerForState
 {
-    public event Action OnGameWon;
-    public event Action OnGameLost;
+    public event Action GamePaused;
+    public event Action GameUnpaused;
+    public event Action GameWon;
+    public event Action GameLost;
     public event Action<int> OnScore;
 
     [SerializeField] private GameplayInput input;
@@ -36,7 +38,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
 
         killZone.OnBallLost += HandleBallLost;
         gameState = GameState.WaitingLaunch;
-        input.Initialize(paddle, ball);
+        input.Initialize(paddle, ball, this);
         ball.BallLaunched += OnBallLaunched;
     }
 
@@ -62,12 +64,12 @@ public class GameController : MonoBehaviour, IGameControllerForState
         blocks.Remove(block);
         playerData.AddScore(100);
         OnScore?.Invoke(playerData.Score);
-        block.OnBlockDestroyed -= HandleBlockDestroyed;
         if (blocks.Count == 0)
         {
-            OnGameWon?.Invoke();
+            GameWon?.Invoke();
             gameState = GameState.GameWin;
         }
+        block.OnBlockDestroyed -= HandleBlockDestroyed;
     }
 
     private void HandleBallLost()
@@ -75,7 +77,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
         playerData.RemoveLives(1);
         if (playerData.Lives <= 0)
         {
-            OnGameLost?.Invoke();
+            GameLost?.Invoke();
             gameState = GameState.GameLost;
             return;
         }
@@ -86,5 +88,22 @@ public class GameController : MonoBehaviour, IGameControllerForState
         gameState = GameState.WaitingLaunch;
     }
 
-    
+    public void SetPause()
+    {
+        if (gameState == GameState.GamePaused)
+        {
+            GameUnpaused?.Invoke();
+            gameState = GameState.Gameplay;
+            ball.UnfreezeBall();
+        }
+        else
+        {
+            if (gameState == GameState.WaitingLaunch)
+                return;
+            GamePaused?.Invoke();
+            gameState = GameState.GamePaused;
+            ball.FreezeBall();
+            paddle.FreezePaddle();
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour, IBall, IBallForInput
     [SerializeField] private float extraSpeedOnCollide = 5F;
     [SerializeField] private float yOffset;
 
+    private Vector3 prePauseVelocity;
     private IGameControllerForState gameController;
     private Vector3 lastVelocity;
     private Rigidbody rb;
@@ -81,5 +82,20 @@ public class Ball : MonoBehaviour, IBall, IBallForInput
         rb.isKinematic = false;
         rb.velocity = Vector3.up * Time.fixedDeltaTime * baseSpeed;
         BallLaunched?.Invoke();
+    }
+
+    public void FreezeBall()
+    {
+        if (rb != null)
+        {
+            prePauseVelocity = rb.velocity;
+            rb.Sleep();
+        }
+    }
+
+    public void UnfreezeBall()
+    {
+        if (rb != null)
+            rb.velocity = prePauseVelocity;
     }
 }

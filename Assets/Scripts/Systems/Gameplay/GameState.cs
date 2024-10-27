@@ -5,4 +5,5 @@ public enum GameState
     BallFall = 2,
     GameWin = 3,
     GameLost = 4,
+    GamePaused = 5,
 }
