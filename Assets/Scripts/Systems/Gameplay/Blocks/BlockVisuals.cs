@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BlockVisuals : MonoBehaviour
@@ -10,20 +9,12 @@ public class BlockVisuals : MonoBehaviour
     private void Awake()
     {
         block = GetComponent<Block>();
-        block.BlockHit += OnBlockHit;
         block.BlockDestroyed += OnBlockDestroyed;
     }
 
     private void OnDisable()
     {
-        block.BlockHit -= OnBlockHit;
         block.BlockDestroyed -= OnBlockDestroyed;
-    }
-
-    private void OnBlockHit(Block block)
-    {
-        //animator.SetTrigger("hit");
-        explosiveParticles.Play(true);
     }
 
     private void OnBlockDestroyed(Block block)
