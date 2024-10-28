@@ -15,6 +15,6 @@ public class PowerUpIncreaseBallSpeed : PowerUpBase
 
     public override void Activate()
     {
-        ball.AddPowerUp(desiredSpeed, powerUpDuration);
+        ball.AddSpeedPowerUp(desiredSpeed, powerUpDuration);
     }
 }
