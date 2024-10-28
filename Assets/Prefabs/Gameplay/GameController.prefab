@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1614660650106740895}
   - component: {fileID: 4871981830062171382}
+  - component: {fileID: 3270835071153123379}
   - component: {fileID: 8026282787598959597}
-  - component: {fileID: -8922984191823681317}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -50,22 +50,7 @@ MonoBehaviour:
     movementReference: {fileID: 2655194319636209057, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
     launchReference: {fileID: 3291077393635922059, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
     pauseReference: {fileID: 693632148898998310, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
---- !u!114 &8026282787598959597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6205092843646958736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37edfa5b421d34f4d90fb2a1516b2b61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameWonClip: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
-  gameLostClip: {fileID: 8300000, guid: a0010a1a0c474473b81729eb770c485f, type: 3}
-  gamePausedClip: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
---- !u!82 &-8922984191823681317
+--- !u!82 &3270835071153123379
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +61,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -161,3 +146,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8026282787598959597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6205092843646958736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37edfa5b421d34f4d90fb2a1516b2b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameWonClip: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
+  gameLostClip: {fileID: 8300000, guid: a0010a1a0c474473b81729eb770c485f, type: 3}
+  gamePausedClip: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
