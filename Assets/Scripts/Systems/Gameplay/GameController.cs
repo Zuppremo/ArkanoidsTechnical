@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
 
 public class GameController : MonoBehaviour, IGameControllerForState
@@ -12,6 +13,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
     public event Action<int> OnScore;
 
     [SerializeField] private GameplayInput input;
+    [SerializeField] private int maxPlayerLives = 5;
 
     private PlayerData playerData;
     private List<IDamageable> blocks = new List<IDamageable>();
@@ -29,19 +31,19 @@ public class GameController : MonoBehaviour, IGameControllerForState
         ball = FindObjectOfType<Ball>();
         paddle = FindObjectOfType<Paddle>();
         killZone = FindObjectOfType<KillZone>();
-        playerData = new PlayerData(3, 0);
+        playerData = new PlayerData(maxPlayerLives, maxPlayerLives, 0);
         var gameObjectsInScene = FindObjectsOfType<MonoBehaviour>().OfType<IDamageable>();
         foreach (IDamageable destructable in gameObjectsInScene)
         {
             blocks.Add(destructable);
             destructable.BlockDestroyed += HandleBlockDestroyed;
         }
-
         killZone.OnBallLost += HandleBallLost;
         gameState = GameState.WaitingLaunch;
         input.Initialize(paddle, ball, this);
         ball.BallLaunched += OnBallLaunched;
     }
+
 
     private void OnDestroy()
     {
@@ -53,11 +55,6 @@ public class GameController : MonoBehaviour, IGameControllerForState
     {
         if (gameState is GameState.WaitingLaunch)
             gameState = GameState.Gameplay;
-    }
-
-    private void Update()
-    {
-        Debug.Log(gameState);
     }
 
     private void HandleBlockDestroyed(Block block)

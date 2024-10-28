@@ -1,13 +1,21 @@
+using System;
+
 public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 {
+    public event Action LifeAdded;
+    public event Action LifeRemoved;
+
     private int lives;
     private int score;
+    private int maxLives;
 
     public int Lives => lives;
     public int Score => score;
+    public int MaxLives => lives;
 
-    public PlayerData(int lives, int score)
+    public PlayerData(int maxLives, int lives, int score)
     {
+        this.maxLives = maxLives;
         this.lives = lives;
         this.score = score;
     }
@@ -24,11 +32,15 @@ public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 
     public void AddLives(int amount)
     {
+        if (lives >= maxLives)
+            lives = maxLives;
         lives += amount;
+        LifeAdded?.Invoke();
     }
 
     public void RemoveLives(int amount)
     {
         lives -= amount;
+        LifeRemoved?.Invoke();
     }
 }
