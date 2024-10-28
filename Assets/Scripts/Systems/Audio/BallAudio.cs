@@ -7,6 +7,8 @@ public class BallAudio : MonoBehaviour
     [SerializeField] private AudioClip ballLaunchedClip;
     [SerializeField] private AudioClip ballCollisionClip;
     [SerializeField] private AudioClip ballLostClip;
+    [SerializeField] private AudioClip ballPowerUpClip;
+
     private AudioSource audioSource;
     private Ball ball;
 
@@ -17,6 +19,7 @@ public class BallAudio : MonoBehaviour
         ball.BallLaunched += OnBallLaunched;
         ball.BallCollision += OnBallCollision;
         ball.BallLost += OnBallLost;
+        ball.BallPowerUp += OnBallPowerUp;
     }
 
     private void OnDestroy()
@@ -24,6 +27,12 @@ public class BallAudio : MonoBehaviour
         ball.BallLaunched -= OnBallLaunched;
         ball.BallCollision -= OnBallCollision;
         ball.BallLost -= OnBallLost;
+        ball.BallPowerUp -= OnBallPowerUp;
+    }
+
+    private void OnBallPowerUp()
+    {
+        audioSource.PlayOneShot(ballPowerUpClip);
     }
 
     private void OnBallLaunched()
