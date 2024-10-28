@@ -1,10 +1,12 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
 {
+    public event Action PowerUpAdd;
     [SerializeField] private float speed;
 
     private IGameControllerForState gameController;
@@ -59,6 +61,7 @@ public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
     {
         if (gameController.GameState != GameState.Gameplay)
             return;
+        PowerUpAdd?.Invoke();
         speedPowerUps.Add(new TimeBasedPowerUp(speed, timeLeft));
     }
 
@@ -67,6 +70,7 @@ public class Paddle : MonoBehaviour, IPaddle, IPaddleForInput
         if (gameController.GameState != GameState.Gameplay)
             return;
         sizePowerUps.Add(new TimeBasedPowerUp(sizeX, duration));
+        PowerUpAdd?.Invoke();
         RefreshScale();
     }
 
