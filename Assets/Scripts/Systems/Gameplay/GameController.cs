@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
 
     public PlayerData PlayerData => playerData;
     public GameState GameState => gameState;
+    public List<IDamageable> Blocks => blocks;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
         foreach (IDamageable destructable in gameObjectsInScene)
         {
             blocks.Add(destructable);
-            destructable.OnBlockDestroyed += HandleBlockDestroyed;
+            destructable.BlockDestroyed += HandleBlockDestroyed;
         }
 
         killZone.OnBallLost += HandleBallLost;
@@ -67,9 +68,10 @@ public class GameController : MonoBehaviour, IGameControllerForState
         if (blocks.Count == 0)
         {
             GameWon?.Invoke();
+            FreezeObjects();
             gameState = GameState.GameWin;
         }
-        block.OnBlockDestroyed -= HandleBlockDestroyed;
+        block.BlockDestroyed -= HandleBlockDestroyed;
     }
 
     private void HandleBallLost()
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
         if (playerData.Lives <= 0)
         {
             GameLost?.Invoke();
+            FreezeObjects();
             gameState = GameState.GameLost;
             return;
         }
@@ -102,8 +105,13 @@ public class GameController : MonoBehaviour, IGameControllerForState
                 return;
             GamePaused?.Invoke();
             gameState = GameState.GamePaused;
-            ball.FreezeBall();
-            paddle.FreezePaddle();
+            FreezeObjects();
         }
+    }
+
+    private void FreezeObjects()
+    {
+        ball.FreezeBall();
+        paddle.FreezePaddle();
     }
 }
