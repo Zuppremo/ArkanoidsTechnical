@@ -14,7 +14,7 @@ public class PlayerScoreText : MonoBehaviour
 
     private void HandleScoreOnUI(int score)
     {
-        scoreText.text = score.ToString();
+        scoreText.text = $"Score: {score}";
     }
 
     public void OnDisable()
