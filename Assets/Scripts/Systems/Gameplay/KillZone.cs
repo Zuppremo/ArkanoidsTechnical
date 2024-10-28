@@ -14,9 +14,9 @@ public class KillZone : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider == ballCollider)
-        {
+        if (collision.collider == ballCollider)
             OnBallLost?.Invoke();
-        }
+        else
+            collision.collider.gameObject.SetActive(false);
     }
 }
