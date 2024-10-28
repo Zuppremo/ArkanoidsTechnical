@@ -6,6 +6,10 @@ using UnityEngine;
 public class Ball : MonoBehaviour, IBall, IBallForInput
 {
     public event Action BallLaunched;
+    public event Action BallCollision;
+    public event Action BallLost;
+    public event Action BallPowerUp;
+    public event Action<float> BallHit;
 
     [SerializeField] private float baseSpeed = 5F;
     [SerializeField] private float extraSpeedOnCollide = 5F;
@@ -40,11 +44,15 @@ public class Ball : MonoBehaviour, IBall, IBallForInput
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.collider.GetComponent<IDamageable>() == null)
+            BallCollision?.Invoke();
+
         float minSpeed = lastVelocity.magnitude;
         float maxSpeed = baseSpeed + speedPowerUps.Sum(p => p.value);
 
         Vector3 direction = Vector3.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
         Vector3 extraVelocity = collision.contacts[0].point.y > transform.position.y ? Vector3.down : Vector3.up;
+        BallHit?.Invoke(collision.contacts[0].point.y);
 
         float contactDirY = (collision.contacts[0].point.y - (transform.position.y - (sphereCollider.radius / 2)));
         if (contactDirY < 0.1F)
@@ -57,19 +65,22 @@ public class Ball : MonoBehaviour, IBall, IBallForInput
 
         if(rb.velocity.sqrMagnitude > (maxSpeed * maxSpeed))
             rb.velocity = rb.velocity.normalized * maxSpeed;
+
     }
 
-    public void AddPowerUp(float speedBonus, float duration)
+    public void AddSpeedPowerUp(float speedBonus, float duration)
     {
         if (gameController.GameState != GameState.Gameplay)
             return;
         speedPowerUps.Add(new TimeBasedPowerUp(speedBonus, duration));
+        BallPowerUp?.Invoke();
         float maxSpeed = baseSpeed + speedPowerUps.Sum(p => p.value);
         rb.velocity = rb.velocity.normalized * maxSpeed;
     }
 
     public void OnBallLost()
     {
+        BallLost?.Invoke();
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
     }
