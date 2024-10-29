@@ -2958,23 +2958,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 3797277520965290599}
+      objectReference: {fileID: 636256617188562073}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetPause
+      value: LoadSceneByName
       objectReference: {fileID: 0}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameController, Assembly-CSharp
+      value: SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 869302941888339, guid: 6300f188b3a29b8489cf548939a7c313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
