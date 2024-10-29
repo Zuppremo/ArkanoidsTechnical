@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,10 +29,10 @@ public class UIPlayerLives : MonoBehaviour
 
     private void OnLifeAdded()
     {
-        if (playerData.Lives >= playerData.MaxLives)
-            return;
         livesCount++;
-        playerLives[livesCount].SetActive(true);
+        if (livesCount >= playerLives.Count)
+            livesCount = playerData.MaxLives;
+        playerLives[livesCount-1].SetActive(true);
     }
 }
  

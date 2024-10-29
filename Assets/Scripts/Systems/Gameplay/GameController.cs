@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour, IGameControllerForState
 
     private void Awake()
     {
-        playerData = new PlayerData(maxPlayerLives, maxPlayerLives, 0);
+        playerData = new PlayerData(maxPlayerLives, 0);
         ball = FindObjectOfType<Ball>();
         paddle = FindObjectOfType<Paddle>();
         killZone = FindObjectOfType<KillZone>();

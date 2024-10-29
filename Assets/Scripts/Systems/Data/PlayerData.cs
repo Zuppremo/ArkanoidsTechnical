@@ -13,10 +13,9 @@ public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
     public int Score => score;
     public int MaxLives => lives;
 
-    public PlayerData(int maxLives, int lives, int score)
+    public PlayerData(int maxLives, int score)
     {
-        this.maxLives = maxLives;
-        this.lives = lives;
+        this.lives = maxLives;
         this.score = score;
     }
 
@@ -32,10 +31,9 @@ public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 
     public void AddLives(int amount)
     {
-        if (lives + amount >= maxLives)
+        lives += amount;
+        if (lives >= maxLives)
             lives = maxLives;
-        else
-            lives += amount;
         LifeAdded?.Invoke();
     }
 
