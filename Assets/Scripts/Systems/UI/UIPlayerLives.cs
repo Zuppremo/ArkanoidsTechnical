@@ -29,10 +29,7 @@ public class UIPlayerLives : MonoBehaviour
 
     private void OnLifeAdded()
     {
-        livesCount++;
-        if (livesCount >= playerLives.Count)
-            livesCount = playerLives.Count - 1;
-        playerLives[livesCount].SetActive(true);
+        playerLives[playerData.Lives - 1].SetActive(true);
     }
 }
  
