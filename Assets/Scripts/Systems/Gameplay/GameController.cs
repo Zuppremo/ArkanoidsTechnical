@@ -28,16 +28,18 @@ public class GameController : MonoBehaviour, IGameControllerForState
 
     private void Awake()
     {
+        playerData = new PlayerData(maxPlayerLives, maxPlayerLives, 0);
         ball = FindObjectOfType<Ball>();
         paddle = FindObjectOfType<Paddle>();
         killZone = FindObjectOfType<KillZone>();
-        playerData = new PlayerData(maxPlayerLives, maxPlayerLives, 0);
+
         var gameObjectsInScene = FindObjectsOfType<MonoBehaviour>().OfType<IDamageable>();
         foreach (IDamageable destructable in gameObjectsInScene)
         {
             blocks.Add(destructable);
             destructable.BlockDestroyed += HandleBlockDestroyed;
         }
+
         killZone.OnBallLost += HandleBallLost;
         gameState = GameState.WaitingLaunch;
         input.Initialize(paddle, ball, this);

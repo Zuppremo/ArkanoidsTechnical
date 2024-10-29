@@ -14,6 +14,7 @@ public class PowerUpPlayerLive : PowerUpBase
 
     public override void Activate()
     {
-        playerData.AddLives(livesToAdd);
+        if(playerData != null)
+            playerData.AddLives(livesToAdd);
     }
 }

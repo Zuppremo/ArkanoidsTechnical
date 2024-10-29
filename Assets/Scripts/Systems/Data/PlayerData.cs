@@ -32,9 +32,10 @@ public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 
     public void AddLives(int amount)
     {
-        if (lives >= maxLives)
+        if (lives + amount >= maxLives)
             lives = maxLives;
-        lives += amount;
+        else
+            lives += amount;
         LifeAdded?.Invoke();
     }
 
