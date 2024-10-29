@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour, ISceneLoader
+public class SceneLoader : MonoBehaviour
 {
     private string currentSceneName;
 
@@ -20,5 +20,10 @@ public class SceneLoader : MonoBehaviour, ISceneLoader
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

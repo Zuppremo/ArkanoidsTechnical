@@ -90,3 +90,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176695
+  packageName: GUI Pro - Casual Game
+  packageVersion: 4.0.4
+  assetPath: Assets/Layer Lab/GUI Pro-CasualGame/ResourcesData/Sprite/Components/Button/Button02_Yellow.png
+  uploadId: 684447
