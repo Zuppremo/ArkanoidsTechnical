@@ -28,7 +28,7 @@ public class UIPlayerLives : MonoBehaviour
 
     private void OnLifeAdded()
     {
-        if (playerData.Lives >= playerData.MaxLives)
+        if (playerData.Lives > playerData.MaxLives)
             return;
         playerLives[playerData.Lives].SetActive(true);
     }
