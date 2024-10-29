@@ -31,8 +31,8 @@ public class UIPlayerLives : MonoBehaviour
     {
         livesCount++;
         if (livesCount >= playerLives.Count)
-            livesCount = playerData.MaxLives;
-        playerLives[livesCount-1].SetActive(true);
+            livesCount = playerLives.Count - 1;
+        playerLives[livesCount].SetActive(true);
     }
 }
  
