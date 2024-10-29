@@ -3,10 +3,11 @@ using TMPro;
 
 public class PlayerScoreText : MonoBehaviour
 {
-    [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text scoreTextGameplay;
+    [SerializeField] TMP_Text scoreTextEndGame;
     private GameController gameController;
 
-    private void Start()
+    private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
         gameController.OnScore += HandleScoreOnUI;
@@ -14,10 +15,11 @@ public class PlayerScoreText : MonoBehaviour
 
     private void HandleScoreOnUI(int score)
     {
-        scoreText.text = $"Score: {score}";
+        scoreTextGameplay.text = $"Score: {score}";
+        scoreTextEndGame.text = $"Total Score: {score}";
     }
 
-    public void OnDisable()
+    public void OnDestroy()
     {
         gameController.OnScore -= HandleScoreOnUI;
     }

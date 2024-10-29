@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class UIPlayerLives : MonoBehaviour
 {
-    [SerializeField] private GameObject playerHearth = default;
     [SerializeField] private List<GameObject> playerLives = new List<GameObject>();
     private PlayerData playerData;
+    private int livesCount;
 
     private void Start()
     {
         playerData = FindObjectOfType<GameController>().PlayerData;
         playerData.LifeAdded += OnLifeAdded;
         playerData.LifeRemoved += OnLifeRemoved;
+        livesCount = playerData.MaxLives;
     }
 
     private void OnDestroy()
@@ -23,14 +24,16 @@ public class UIPlayerLives : MonoBehaviour
 
     private void OnLifeRemoved()
     {
-        playerLives[playerData.Lives].SetActive(false);
+        livesCount--;
+        playerLives[livesCount].SetActive(false);
     }
 
     private void OnLifeAdded()
     {
-        if (playerData.Lives > playerData.MaxLives)
+        if (playerData.Lives >= playerData.MaxLives)
             return;
-        playerLives[playerData.Lives].SetActive(true);
+        livesCount++;
+        playerLives[livesCount].SetActive(true);
     }
 }
  
