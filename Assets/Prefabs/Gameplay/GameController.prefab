@@ -50,6 +50,7 @@ MonoBehaviour:
     movementReference: {fileID: 2655194319636209057, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
     launchReference: {fileID: 3291077393635922059, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
     pauseReference: {fileID: 693632148898998310, guid: 9b9ce3bdaf4f5194f841614bad587ca7, type: 3}
+  maxPlayerLives: 5
 --- !u!82 &3270835071153123379
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,7 +62,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
