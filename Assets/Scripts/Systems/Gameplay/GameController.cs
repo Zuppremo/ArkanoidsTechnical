@@ -76,18 +76,17 @@ public class GameController : MonoBehaviour, IGameControllerForState
     private void HandleBallLost()
     {
         playerData.RemoveLives(1);
-        if (playerData.Lives <= 0)
-        {
-            GameLost?.Invoke();
-            FreezeObjects();
-            gameState = GameState.GameLost;
-            return;
-        }
-
         ball.OnBallLost();
         ball.transform.SetParent(paddle.transform);
         ball.transform.position = new Vector3(paddle.transform.position.x, paddle.transform.position.y + 0.5F, 0);
         gameState = GameState.WaitingLaunch;
+        if (playerData.Lives <= 0)
+        {
+            FreezeObjects();
+            GameLost?.Invoke();
+            gameState = GameState.GameLost;
+            return;
+        }
     }
 
     public void SetPause()

@@ -7,7 +7,7 @@ public class PlayerData : IPlayerDataPowerUps, IPlayerDataUI
 
     private int lives;
     private int score;
-    private int maxLives;
+    private int maxLives = 5;
 
     public int Lives => lives;
     public int Score => score;
