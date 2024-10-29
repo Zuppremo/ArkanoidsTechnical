@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a70e78c163a3f4bb759b7917d49dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHearth: {fileID: 8477636133282526126}
   playerLives:
   - {fileID: 8477636133282526126}
   - {fileID: 4628113486052908793}
@@ -758,7 +757,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d942b811b55df941b0430274d0b66be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 3946331868130458327}
+  scoreTextGameplay: {fileID: 3946331868130458327}
+  scoreTextEndGame: {fileID: 5005183081216506838}
 --- !u!1 &5743589725742701936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1829,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6107468316010047808, guid: 7014ee3592ffaa34a8094f0f7fee9fd0, type: 3}
   m_PrefabInstance: {fileID: 1694626509215215532}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5005183081216506838 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5976697451305751674, guid: 7014ee3592ffaa34a8094f0f7fee9fd0, type: 3}
+  m_PrefabInstance: {fileID: 1694626509215215532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9113622892788912796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7637702996682784048, guid: 7014ee3592ffaa34a8094f0f7fee9fd0, type: 3}
