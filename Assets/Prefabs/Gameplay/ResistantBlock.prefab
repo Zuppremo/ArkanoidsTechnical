@@ -129,7 +129,7 @@ MonoBehaviour:
   - {fileID: 3258334704301492862, guid: 316a0032473565f40aa434bfac749b02, type: 3}
   - {fileID: 8595278065359771729, guid: 479586bdf3de7b2468e6563d0dded4d0, type: 3}
   - {fileID: 8443802770844405732, guid: 98079c7dd7948114dad0e34eeeeb0fbe, type: 3}
-  powerUpChance: 0.201
+  powerUpChance: 0.101
 --- !u!54 &8115050631562160457
 Rigidbody:
   m_ObjectHideFlags: 0
